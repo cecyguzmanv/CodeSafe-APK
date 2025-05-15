@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CodeSafe</title>
+    <style>
+        :root {
+            --primary-color: #9c88ff;
+            --danger-color: #ff6b6b;
+            --secondary-color: #54a0ff;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --medium-gray: #ddd;
+            --dark-gray: #666;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            background: var(--white);
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        
+        #login-screen .title {
+            font-size: 42px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 38px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            padding: 0 15px;
+        }
+        
+        input {
+            width: calc(100% - 30px);
+            padding: 18px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 10px;
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        
+        button {
+            width: calc(100% - 30px);
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .danger-btn {
+            background-color: var(--danger-color);
+            color: var(--white);
+            margin-top: 30px;
+        }
+        
+        .secondary-btn {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+        
+        .bank-list {
+            margin-top: 30px;
+        }
+        
+        .bank-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background-color: var(--white);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .bank-item:active {
+            transform: scale(0.98);
+        }
+        
+        .bank-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        
+        .bank-name {
+            flex: 1;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .add-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-left: auto;
+            margin-right: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+        
+        .field-group {
+            margin-bottom: 12px;
+            padding: 0 15px;
+        }
+        
+        .field-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        .input-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-actions input {
+            flex: 1;
+        }
+        
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 22px;
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+        
+        .detail-header h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+        
+        .edit-btn {
+            padding: 8px 16px;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            width: 85%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .color-picker {
+            margin-top: 20px;
+        }
+        
+        .color-picker input[type="color"] {
+            width: 60px;
+            height: 60px;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        #bank-detail-screen {
+            display: none;
+            overflow-y: auto;
+            height: calc(100vh - 60px);
+            padding-bottom: 20px;
+        }
+        
+        .detail-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            gap: 15px;
+        }
+        
+        .detail-footer button {
+            width: 48%;
+            margin: 0;
+        }
+        
+        @media (min-width: 600px) {
+            .container {
+                max-width: 550px;
+                padding: 40px 30px;
+            }
+            
+            .header {
+                margin-bottom: 50px;
+            }
+            
+            .title {
+                font-size: 44px;
+            }
+            
+            #login-screen .title {
+                font-size: 48px;
+            }
+            
+            .subtitle {
+                font-size: 22px;
+            }
+            
+            input, button {
+                font-size: 20px;
+            }
+            
+            .bank-name {
+                font-size: 22px;
+            }
+            
+            .section-title {
+                font-size: 26px;
+            }
+            
+            .field-label {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- Login Screen -->
+        <div id="login-screen">
+            <div class="header">
+                <div class="title">CodeSafe</div>
+                <div class="subtitle">Iniciar sesión</div>
+            </div>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Usuario">
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Contraseña">
+            </div>
+            <button class="primary-btn" id="login-btn">Acceder</button>
+        </div>
+
+        <!-- Bank List Screen -->
+        <div id="bank-list-screen" style="display: none;">
+            <div class="header">
+                <div class="title">CodeSafe</div>
+                <div class="subtitle">Mis Bancos</div>
+            </div>
+            <div id="bank-list" class="bank-list">
+                <!-- Bank items will be added here -->
+            </div>
+            <button id="logout-btn" class="danger-btn">Cerrar sesión</button>
+            <div id="add-bank-btn" class="add-btn">+</div>
+        </div>
+
+        <!-- Bank Detail Screen -->
+        <div id="bank-detail-screen" style="display: none;">
+            <div class="detail-header">
+                <h2 id="detail-bank-name"></h2>
+                <button class="edit-btn" id="edit-btn">Editar</button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Banca Móvil</div>
+                <div class="field-group">
+                    <label class="field-label">Usuario</label>
+                    <div class="input-actions">
+                        <input type="password" id="mobile-user" readonly>
+                        <div class="action-btn" id="toggle-mobile-user">👁️</div>
+                        <div class="action-btn" id="copy-mobile-user">📋</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Contraseña</label>
+                    <div class="input-actions">
+                        <input type="password" id="mobile-password" readonly>
+                        <div class="action-btn" id="toggle-mobile-password">👁️</div>
+                        <div class="action-btn" id="copy-mobile-password">📋</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Tarjetas</div>
+                <div class="field-group">
+                    <label class="field-label">Número de cuenta</label>
+                    <div class="input-actions">
+                        <input type="password" id="card-account" readonly>
+                        <div class="action-btn" id="toggle-card-account">👁️</div>
+                        <div class="action-btn" id="copy-card-account">📋</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Número de tarjeta</label>
+                    <div class="input-actions">
+                        <input type="password" id="card-number" readonly>
+                        <div class="action-btn" id="toggle-card-number">👁️</div>
+                        <div class="action-btn" id="copy-card-number">📋</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Vencimiento</label>
+                    <div class="input-actions">
+                        <input type="password" id="card-expiry" readonly>
+                        <div class="action-btn" id="toggle-card-expiry">👁️</div>
+                        <div class="action-btn" id="copy-card-expiry">📋</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">CVV</label>
+                    <div class="input-actions">
+                        <input type="password" id="card-cvv" readonly>
+                        <div class="action-btn" id="toggle-card-cvv">👁️</div>
+                        <div class="action-btn" id="copy-card-cvv">📋</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">PIN</label>
+                    <div class="input-actions">
+                        <input type="password" id="card-pin" readonly>
+                        <div class="action-btn" id="toggle-card-pin">👁️</div>
+                        <div class="action-btn" id="copy-card-pin">📋</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Descripción</label>
+                    <input type="text" id="card-description" readonly>
+                </div>
+            </div>
+            <div class="detail-footer">
+                <button id="back-btn" class="secondary-btn">Volver</button>
+                <button id="delete-bank-btn" class="danger-btn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bank Modal -->
+    <div id="add-bank-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Añadir banco</h3>
+            <div class="input-group">
+                <input type="text" id="new-bank-name" placeholder="Nombre del banco">
+            </div>
+            <div class="input-group color-picker">
+                <label class="field-label">Color del banco</label>
+                <input type="color" id="bank-color" value="#9c88ff">
+            </div>
+            <div class="modal-footer">
+                <button class="primary-btn" id="save-bank-btn">Guardar</button>
+                <button class="danger-btn" id="cancel-bank-btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Bank Modal -->
+    <div id="edit-bank-modal" class="modal">
+        <div class="modal-content">
+            <h3>Editar banco</h3>
+            <input type="hidden" id="edit-bank-id">
+            <div class="input-group">
+                <input type="text" id="edit-bank-name" placeholder="Nombre del banco">
+            </div>
+            <div class="input-group color-picker">
+                <label class="field-label">Color del banco</label>
+                <input type="color" id="edit-bank-color" value="#9c88ff">
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Banca Móvil</div>
+                <div class="field-group">
+                    <label class="field-label">Usuario</label>
+                    <input type="text" id="edit-mobile-user" placeholder="Usuario">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Contraseña</label>
+                    <input type="text" id="edit-mobile-password" placeholder="Contraseña">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Tarjetas</div>
+                <div class="field-group">
+                    <label class="field-label">Número de cuenta</label>
+                    <input type="text" id="edit-account-number" placeholder="Número de cuenta">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Número de tarjeta</label>
+                    <input type="text" id="edit-card-number" placeholder="Número de tarjeta">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Vencimiento</label>
+                    <input type="text" id="edit-card-expiry" placeholder="MM/AA">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">CVV</label>
+                    <input type="text" id="edit-card-cvv" placeholder="CVV">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">PIN</label>
+                    <input type="text" id="edit-card-pin" placeholder="PIN">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Descripción</label>
+                    <input type="text" id="edit-card-description" placeholder="Descripción">
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="primary-btn" id="save-edit-btn">Guardar cambios</button>
+                <button class="danger-btn" id="cancel-edit-btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading">
+        Cargando...
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const loginScreen = document.getElementById('login-screen');
+            const bankListScreen = document.getElementById('bank-list-screen');
+            const bankDetailScreen = document.getElementById('bank-detail-screen');
+            const bankList = document.getElementById('bank-list');
+            const addBankBtn = document.getElementById('add-bank-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const backBtn = document.getElementById('back-btn');
+            const deleteBankBtn = document.getElementById('delete-bank-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const addBankModal = document.getElementById('add-bank-modal');
+            const editBankModal = document.getElementById('edit-bank-modal');
+            const saveBankBtn = document.getElementById('save-bank-btn');
+            const cancelBankBtn = document.getElementById('cancel-bank-btn');
+            const saveEditBtn = document.getElementById('save-edit-btn');
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            const editBtn = document.getElementById('edit-btn');
+            const loading = document.getElementById('loading');
+
+            // Current bank being viewed/edited
+            let currentBank = null;
+            let banks = [];
+
+            // View management
+            function showView(view) {
+                loginScreen.style.display = 'none';
+                bankListScreen.style.display = 'none';
+                bankDetailScreen.style.display = 'none';
+                view.style.display = 'block';
+            }
+
+            // Show loading indicator
+            function showLoading() {
+                loading.style.display = 'flex';
+            }
+
+            // Hide loading indicator
+            function hideLoading() {
+                loading.style.display = 'none';
+            }
+
+            // Render bank list
+            function renderBankList() {
+                showLoading();
+                google.script.run.withSuccessHandler(function(banksData) {
+                    banks = banksData;
+                    bankList.innerHTML = '';
+                    
+                    if (banks.length === 0) {
+                        bankList.innerHTML = '<p style="text-align: center; font-size: 18px; color: #666; padding: 20px;">No hay bancos registrados. Presiona el botón "+" para agregar uno.</p>';
+                    } else {
+                        banks.forEach(bank => {
+                            const bankItem = document.createElement('div');
+                            bankItem.className = 'bank-item';
+                            bankItem.innerHTML = `
+                                <div class="bank-color" style="background-color: ${bank.color || '#9c88ff'};"></div>
+                                <div class="bank-name">${bank.name}</div>
+                            `;
+                            bankItem.addEventListener('click', () => {
+                                showBankDetails(bank);
+                            });
+                            bankList.appendChild(bankItem);
+                        });
+                    }
+                    hideLoading();
+                }).getBanks();
+            }
+
+            // Show bank details
+            function showBankDetails(bank) {
+                currentBank = bank;
+                document.getElementById('detail-bank-name').textContent = bank.name;
+                
+                // Banca móvil
+                document.getElementById('mobile-user').value = bank.mobileUser || '';
+                document.getElementById('mobile-password').value = bank.mobilePassword || '';
+                
+                // Tarjetas
+                document.getElementById('card-account').value = bank.accountNumber || '';
+                document.getElementById('card-number').value = bank.cardNumber || '';
+                document.getElementById('card-expiry').value = bank.expiry || '';
+                document.getElementById('card-cvv').value = bank.cvv || '';
+                document.getElementById('card-pin').value = bank.pin || '';
+                document.getElementById('card-description').value = bank.description || '';
+                
+                showView(bankDetailScreen);
+            }
+
+            // Login
+            loginBtn.addEventListener('click', () => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (username && password) {
+                    showLoading();
+                    google.script.run.withSuccessHandler(function(result) {
+                        if (result.success) {
+                            showView(bankListScreen);
+                            renderBankList();
+                        } else {
+                            alert(result.message || 'Error al iniciar sesión');
+                        }
+                        hideLoading();
+                    }).withFailureHandler(function(error) {
+                        alert('Error: ' + error.message);
+                        hideLoading();
+                    }).loginUser(username, password);
+                } else {
+                    alert('Por favor ingrese usuario y contraseña');
+                }
+            });
+
+            // Logout
+            logoutBtn.addEventListener('click', () => {
+                showView(loginScreen);
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            });
+
+            // Back button
+            backBtn.addEventListener('click', () => {
+                showView(bankListScreen);
+            });
+
+            // Delete bank button
+            deleteBankBtn.addEventListener('click', () => {
+                if (confirm('¿Estás seguro de que deseas eliminar este banco?')) {
+                    showLoading();
+                    google.script.run.withSuccessHandler(function() {
+                        showView(bankListScreen);
+                        renderBankList();
+                        hideLoading();
+                    }).withFailureHandler(function(error) {
+                        alert('Error al eliminar: ' + error.message);
+                        hideLoading();
+                    }).deleteBank(currentBank.id);
+                }
+            });
+
+            // Add bank
+            addBankBtn.addEventListener('click', () => {
+                document.getElementById('modal-title').textContent = 'Añadir banco';
+                document.getElementById('new-bank-name').value = '';
+                document.getElementById('bank-color').value = '#9c88ff';
+                addBankModal.style.display = 'flex';
+            });
+
+            // Save new bank
+            saveBankBtn.addEventListener('click', () => {
+                const name = document.getElementById('new-bank-name').value;
+                const color = document.getElementById('bank-color').value;
+
+                if (name) {
+                    showLoading();
+                    google.script.run.withSuccessHandler(function() {
+                        addBankModal.style.display = 'none';
+                        renderBankList();
+                        hideLoading();
+                    }).withFailureHandler(function(error) {
+                        alert('Error al guardar: ' + error.message);
+                        hideLoading();
+                    }).saveBank({
+                        name: name,
+                        color: color
+                    });
+                } else {
+                    alert('Por favor ingrese el nombre del banco');
+                }
+            });
+
+            // Cancel add bank
+            cancelBankBtn.addEventListener('click', () => {
+                addBankModal.style.display = 'none';
+            });
+
+            // Edit bank button
+            editBtn.addEventListener('click', () => {
+                if (currentBank) {
+                    // Fill edit form with current bank data
+                    document.getElementById('edit-bank-id').value = currentBank.id;
+                    document.getElementById('edit-bank-name').value = currentBank.name;
+                    document.getElementById('edit-bank-color').value = currentBank.color || '#9c88ff';
+                    
+                    // Banca móvil
+                    document.getElementById('edit-mobile-user').value = currentBank.mobileUser || '';
+                    document.getElementById('edit-mobile-password').value = currentBank.mobilePassword || '';
+                    
+                    // Tarjetas
+                    document.getElementById('edit-account-number').value = currentBank.accountNumber || '';
+                    document.getElementById('edit-card-number').value = currentBank.cardNumber || '';
+                    document.getElementById('edit-card-expiry').value = currentBank.expiry || '';
+                    document.getElementById('edit-card-cvv').value = currentBank.cvv || '';
+                    document.getElementById('edit-card-pin').value = currentBank.pin || '';
+                    document.getElementById('edit-card-description').value = currentBank.description || '';
+                    
+                    editBankModal.style.display = 'flex';
+                }
+            });
+
+            // Save edited bank
+            saveEditBtn.addEventListener('click', () => {
+                const bankData = {
+                    id: parseInt(document.getElementById('edit-bank-id').value),
+                    name: document.getElementById('edit-bank-name').value,
+                    color: document.getElementById('edit-bank-color').value,
+                    mobileUser: document.getElementById('edit-mobile-user').value,
+                    mobilePassword: document.getElementById('edit-mobile-password').value,
+                    accountNumber: document.getElementById('edit-account-number').value,
+                    cardNumber: document.getElementById('edit-card-number').value,
+                    expiry: document.getElementById('edit-card-expiry').value,
+                    cvv: document.getElementById('edit-card-cvv').value,
+                    pin: document.getElementById('edit-card-pin').value,
+                    description: document.getElementById('edit-card-description').value
+                };
+
+                if (bankData.name) {
+                    showLoading();
+                    google.script.run.withSuccessHandler(function() {
+                        editBankModal.style.display = 'none';
+                        renderBankList();
+                        // Refresh current bank details
+                        showBankDetails(bankData);
+                        hideLoading();
+                    }).withFailureHandler(function(error) {
+                        alert('Error al guardar: ' + error.message);
+                        hideLoading();
+                    }).saveBank(bankData);
+                } else {
+                    alert('Por favor ingrese el nombre del banco');
+                }
+            });
+
+            // Cancel edit bank
+            cancelEditBtn.addEventListener('click', () => {
+                editBankModal.style.display = 'none';
+            });
+
+            // Toggle password visibility for all fields
+            document.querySelectorAll('[id^="toggle-"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const inputId = this.id.replace('toggle-', '');
+                    const input = document.getElementById(inputId);
+                    input.type = input.type === 'password' ? 'text' : 'password';
+                });
+            });
+
+            // Copy to clipboard for all fields
+            document.querySelectorAll('[id^="copy-"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const inputId = this.id.replace('copy-', '');
+                    const input = document.getElementById(inputId);
+                    input.select();
+                    document.execCommand('copy');
+                    alert('Copiado al portapapeles');
+                });
+            });
+
+            // Initial view
+            showView(loginScreen);
+        });
+    </script>
+</body>
+</html>
