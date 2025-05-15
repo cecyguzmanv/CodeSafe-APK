@@ -1,0 +1,31 @@
+{
+  "name": "CodeSafe",
+  "short_name": "CodeSafe",
+  "description": "Gestor seguro de credenciales bancarias",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#9c88ff",
+  "theme_color": "#9c88ff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "security"],
+  "dir": "ltr",
+  "lang": "es",
+  "scope": "/",
+  "id": "/",
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Pantalla de inicio"
+    }
+  ]
+}

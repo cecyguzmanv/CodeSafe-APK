@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CodeSafe</title>
+    <!-- Enlace al manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#9c88ff">
+    <style>
+        /* [Tus estilos CSS actuales aquí] */
+        :root { --primary-color: #9c88ff; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; }
+        /* ... (conserva todo tu CSS original) ... */
+    </style>
+</head>
+<body>
+    <!-- [Todo tu HTML actual aquí] -->
+    <div id="app" class="container">
+        <!-- Login Screen -->
+        <div id="login-screen">...</div>
+        <!-- Bank List Screen -->
+        <div id="bank-list-screen" style="display: none;">...</div>
+        <!-- Bank Detail Screen -->
+        <div id="bank-detail-screen" style="display: none;">...</div>
+    </div>
+
+    <!-- Registro del Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('✅ Service Worker registrado'))
+                    .catch(err => console.error('❌ Error en SW:', err));
+            });
+        }
+
+        // [Tu código JavaScript original aquí]
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... (todo tu código actual de google.script.run, etc.)
+        });
+    </script>
+</body>
+</html>
